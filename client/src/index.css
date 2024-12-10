@@ -1,0 +1,9 @@
+.loginPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+.wallposts{
+    height: 100%;
+}
