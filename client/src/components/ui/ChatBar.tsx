@@ -5,6 +5,8 @@ import {
   ListItem,
   ListItemText,
   Modal,
+  Menu,
+  MenuItem,
   TextField,
   Typography,
   Checkbox,
@@ -31,6 +33,14 @@ export default function ChatBar(): JSX.Element {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const { sendGroupData } = useContext(ChatwsContext);
   const [searchQuery, setSearchQuery] = useState('');
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+      setAnchorEl(null);
+    };
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().startsWith(searchQuery.toLowerCase()),
@@ -199,6 +209,14 @@ export default function ChatBar(): JSX.Element {
               onClick={() => handleSelect(group.id!)}
             >
               <ListItemText primary={cropTitle} />
+              <Button onClick={(event) => handleClick(event)} sx={{ alignSelf: 'flex-start' }}>
+                ...
+              </Button>
+
+              <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+                <MenuItem sx={{ color: 'red', fontSize: '0.875rem' }}>Удалить</MenuItem>
+                <MenuItem sx={{ fontSize: '0.875rem' }}>Редактировать</MenuItem>
+              </Menu>
             </ListItem>
           );
         })}
